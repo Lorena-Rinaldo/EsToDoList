@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EsToDoList</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+  <div class="flex flex-col md:w-1/2 md:m-auto gap-2 m-6 p-4 shadow-2xl rounded-2xl ">
+
+    <h1 class="text-5xl text-blue-700 font-bold text-center">
+      EsToDoList</h1>
+
+    <input type="text" placeholder="Tarefa" class="border border-blue-300 rounded p-2 w-full mt-8">
+
+    <button class="bg-blue-600 px-4 py-2 rounded mt-4 w-1/2 border border-black-100 text-white self-center">
+      Adicionar</button>
+
+    <ul class="space-y-3">
+      <li class="flex justify-between bg-gray-200 px-4 py-2 rounded">
+        <span class="text-xl text-gray-500 line-through"> Estudar Tailwind</span>
+        <button class="bg-red-700 py-2 px-4 text-white">
+          X</button>
+      </li>
+
+      <li class="flex justify-between bg-gray-200 px-4 py-2 rounded">
+        <span class="text-xl text-black"> Estudar Next.JS</span>
+        <button class="bg-red-700 py-2 px-4 text-white">
+          X</button>
+      </li>
+
+      <li class="flex justify-between bg-gray-200 px-4 py-2 rounded">
+        <span class="text-xl text-black"> Estudar React</span>
+        <button class="bg-red-700 py-2 px-4 text-white">
+          X</button>
+      </li>
+    </ul>
+
+  </div>
+</body>
+
+</html>
