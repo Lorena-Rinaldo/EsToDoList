@@ -68,15 +68,53 @@
       </button>
     </div>
   </aside>
-  <main class="flex flex-col flex-1 p-6">
-    <header class="flex w-full bg-violet-500">
-      <div class="flex flex-row items-center justify-center w-full">
-        <input type="text" id="adicionar-tarefa" placeholder="Adicionar tarefa..." class="w-2/4 p-2 border-gray-400 rounded-l-lg">
-        <button class="w-12 p-2 bg-green-500 rounded-r-lg">+</button>
+
+  <main class="flex flex-col flex-1 p-6 overflow-y-auto bg-gray-100 dark:bg-black">
+    <header class="mb-8">
+      <div class="flex flex-row items-center justify-center w-full ">
+        <input type="text" id="adicionar-tarefa" placeholder="Adicionar tarefa..."
+          class="w-2/4 p-2 border border-gray-400 rounded-l-lg">
+        <button class="w-12 p-2 text-center text-white bg-green-500 border border-gray-400 rounded-r-lg">+</button>
+      </div>
+
+      <div>
+
       </div>
     </header>
-    <footer>
 
+    <div class="p-4 mb-6 bg-white border border-gray-200 rounded-lg shadow-md">
+      <div class="relative flex justify-end mb-2">
+        <div id="configuracoes-tarefa"
+          class="absolute right-0 z-10 hidden w-40 mt-2 bg-white rounded-md shadow-lg top-full">
+          <a href="/editarpost/1"
+            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600">
+            <i class="mr-2 fa-solid fa-pencil"></i> Editar
+          </a>
+          <a href="/excluirpost/1"
+            class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700">
+            <i class="mr-2 fa-solid fa-trash"></i> Excluir
+          </a>
+        </div>
+        <button id="ellipsisIcon-1"
+          class="p-1 text-gray-500 transition-colors duration-200 rounded-full hover:text-gray-700 hover:bg-gray-100">
+          <i class="text-lg fa-solid fa-ellipsis"></i>
+        </button>
+      </div>
+
+      <div class="mb-4 post-content">
+        <div class="flex flex-row w-full">
+          <h2 class="w-1/2 mb-1 text-xl font-bold text-gray-900">Título do Post de Exemplo</h2>
+          <h2 class="w-1/2">Data:</h2>
+        </div>
+        <a href="/post/1" class="text-sm text-blue-600 hover:underline">...Leia Mais</a>
+      </div>
+    </div>
+
+    <footer class="flex flex-col">
+      <div>
+        <hr>
+      </div>
+      <p class="text-center">Criado por Lorena</p>
     </footer>
   </main>
 </body>
