@@ -1,47 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>EsToDoList</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Tailwind CSS via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDQz6ESV6/P79qDydo5YjWkK9p5/T6Bw3t/35p3D6uK1OQ2h8t2a/l3i6GqQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Google Fonts - Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    rel="stylesheet">
+
+  <!-- Estilo customizado para a fonte Plus Jakarta Sans (se estiver usando CDN para Tailwind) -->
+  <!-- Se você está usando a configuração completa do Tailwind com 'tailwind.config.js', pode remover esta tag <style> -->
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
 </head>
 
-<body>
-  <div class="flex flex-col md:w-1/2 md:m-auto gap-2 m-6 p-4 shadow-2xl rounded-2xl ">
+<body class="flex h-screen bg-gray-100 dark:bg-black">
+  <aside class="flex flex-col justify-between w-64 h-screen p-4 bg-white shadow-md">
+    <div class="text-center ">
+      <div class="mb-4 text-3xl font-extrabold text-blue-700">
+        <h1>EsToDoList</h1>
+      </div>
 
-    <h1 class="text-5xl text-blue-700 font-bold text-center">
-      EsToDoList</h1>
+      <div class="relative">
+        <input class="w-full p-2 border border-gray-400 rounded-lg" type="text" id="pesquisar-tarefa"
+          placeholder="Pesquisar...">
+      </div>
+    </div>
 
-    <input type="text" placeholder="Tarefa" class="border border-blue-300 rounded p-2 w-full mt-8">
+    <nav class="flex flex-col items-center w-full gap-4">
+      <button
+        class="w-full p-3 text-center text-black bg-white border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
+        <h3>
+          Concluídas
+        </h3>
+      </button>
+      <button
+        class="w-full p-3 text-center text-black bg-white border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
+        <h3>
+          Pendentes
+        </h3>
+      </button>
+    </nav>
 
-    <button class="bg-blue-600 px-4 py-2 rounded mt-4 w-1/2 border border-black-100 text-white self-center">
-      Adicionar</button>
+    <div class="flex flex-col gap-2">
+      <button class="w-full p-3 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-200 hover:text-black">
+        Configurações
+      </button>
 
-    <ul class="space-y-3">
-      <li class="flex justify-between bg-gray-200 px-4 py-2 rounded">
-        <span class="text-xl text-gray-500 line-through"> Estudar Tailwind</span>
-        <button class="bg-red-700 py-2 px-4 text-white">
-          X</button>
-      </li>
+      <button
+        class="w-full p-3 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-200 hover:text-black focus:ring-green-20">
+        Perfil
+      </button>
+    </div>
+  </aside>
+  <main class="flex flex-col flex-1 p-6">
+    <header class="flex w-full bg-violet-500">
+      <div class="flex flex-row items-center justify-center w-full">
+        <input type="text" id="adicionar-tarefa" placeholder="Adicionar tarefa..." class="w-2/4 p-2 border-gray-400 rounded-l-lg">
+        <button class="w-12 p-2 bg-green-500 rounded-r-lg">+</button>
+      </div>
+    </header>
+    <footer>
 
-      <li class="flex justify-between bg-gray-200 px-4 py-2 rounded">
-        <span class="text-xl text-black"> Estudar Next.JS</span>
-        <button class="bg-red-700 py-2 px-4 text-white">
-          X</button>
-      </li>
-
-      <li class="flex justify-between bg-gray-200 px-4 py-2 rounded">
-        <span class="text-xl text-black"> Estudar React</span>
-        <button class="bg-red-700 py-2 px-4 text-white">
-          X</button>
-      </li>
-    </ul>
-
-  </div>
+    </footer>
+  </main>
 </body>
 
 </html>
