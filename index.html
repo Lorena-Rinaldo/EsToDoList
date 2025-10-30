@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
     rel="stylesheet">
 
-    <script src="./script.js"></script>
+  <script src="./script.js" defer></script>
 
   <style>
     body {
@@ -38,14 +38,21 @@
           class="w-full p-2 pl-10 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           type="text" id="pesquisar-tarefa" placeholder="Pesquisar...">
       </div>
+
       <nav class="flex flex-col items-center w-full gap-4 mt-4">
-        <button
+        <button id="filtro-todas"
+          class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
+          <h3>
+            Todas as Tarefas
+          </h3>
+        </button>
+        <button id="filtro-concluidas"
           class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
           <h3>
             Concluídas
           </h3>
         </button>
-        <button
+        <button id="filtro-pendentes"
           class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
           <h3>
             Pendentes
@@ -78,39 +85,14 @@
       </div>
     </header>
 
-    <div class="p-4 mb-6 bg-white border border-gray-200 rounded-lg shadow-md">
-      <div class="relative flex justify-end mb-2">
-        <div id="configuracoes-tarefa"
-          class="absolute right-0 z-10 hidden w-40 mt-2 bg-white rounded-md shadow-lg top-full">
-          <a href="/editarpost/1"
-            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600">
-            <i class="mr-2 bi bi-pencil"></i> Editar
-          </a>
-          <a href="/excluirpost/1"
-            class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700">
-            <i class="mr-2 bi bi-trash"></i> Excluir
-          </a>
-        </div>
-        <button id="ellipsisIcon-1"
-          class="p-1 text-gray-500 transition-colors duration-200 rounded-full hover:text-gray-700 hover:bg-gray-100">
-          <i class="text-lg bi bi-three-dots"></i>
-        </button>
-      </div>
-
-      <div class="mb-4 post-content">
-        <div class="flex flex-row w-full">
-          <h2 class="w-1/2 mb-1 text-xl font-bold text-gray-900">Título do Post de Exemplo</h2>
-          <h2 class="w-1/2">Data:</h2>
-        </div>
-        <h3 class="text-sm text-gray-800">Descrição</h3>
-      </div>
+    <div id="lista-de-tarefas" class="flex flex-col gap-4">
     </div>
 
-    <footer class="flex flex-col">
+    <footer class="flex flex-col mt-auto pt-4">
       <div>
         <hr>
       </div>
-      <p class="text-center">Criado por Lorena</p>
+      <p class="text-center text-gray-500 mt-2">Criado por Lorena</p>
     </footer>
   </main>
 </body>
