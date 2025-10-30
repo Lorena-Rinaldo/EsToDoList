@@ -7,7 +7,7 @@
 Bem-vindo ao projeto **EsToDoList**! Esta é uma aplicação de lista de tarefas (To-Do List) desenvolvida para ajudar você a organizar suas atividades de forma eficiente. Com um design responsivo e funcionalidades essenciais de CRUD (Criar, Ler, Atualizar, Deletar), o EsToDoList permite gerenciar tarefas, definir prazos e acompanhar seu progresso.
 
 ## Índice
--------
+
 * [Sobre o Projeto](#sobre-o-projeto)
 * [Tecnologias Utilizadas](#tecnologias-utilizadas)
 * [Funcionalidades Implementadas](#funcionalidades-implementadas)
