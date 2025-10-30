@@ -2,99 +2,125 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EsToDoList</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EsToDoList</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <!-- Usamos o CDN via script para que as classes dinâmicas funcionem -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="./script.js" defer></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-    rel="stylesheet">
-
-  <script src="./script.js" defer></script>
-
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-  </style>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Estilo para que o input de data se pareça mais com os outros */
+        #data-entrega::-webkit-calendar-picker-indicator {
+            padding: 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="flex h-screen bg-gray-100 dark:bg-black">
-  <aside class="flex flex-col justify-between w-64 h-screen p-4 bg-white shadow-md">
-    <div class="text-center ">
-      <div class="mb-4 text-3xl font-extrabold text-blue-700">
-        <h1>EsToDoList</h1>
-      </div>
+    <!-- Sidebar -->
+    <aside class="flex flex-col justify-between w-64 h-screen p-4 bg-white shadow-md">
+        <div class="text-center ">
+            <div class="mb-4 text-3xl font-extrabold text-blue-700">
+                <h1>EsToDoList</h1>
+            </div>
 
-      <div class="relative">
-        <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <div class="relative">
+                <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
 
-        <input
-          class="w-full p-2 pl-10 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          type="text" id="pesquisar-tarefa" placeholder="Pesquisar...">
-      </div>
+                <input
+                    class="w-full p-2 pl-10 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    type="text" id="pesquisar-tarefa" placeholder="Pesquisar...">
+            </div>
 
-      <nav class="flex flex-col items-center w-full gap-4 mt-4">
-        <button id="filtro-todas"
-          class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
-          <h3>
-            Todas as Tarefas
-          </h3>
-        </button>
-        <button id="filtro-concluidas"
-          class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
-          <h3>
-            Concluídas
-          </h3>
-        </button>
-        <button id="filtro-pendentes"
-          class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white">
-          <h3>
-            Pendentes
-          </h3>
-        </button>
-      </nav>
+            <nav class="flex flex-col items-center w-full gap-4 mt-4">
+                <button id="filtro-todas"
+                    class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white transition duration-150">
+                    <h3>
+                        Todas as Tarefas
+                    </h3>
+                </button>
+                <button id="filtro-concluidas"
+                    class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white transition duration-150">
+                    <h3>
+                        Concluídas
+                    </h3>
+                </button>
+                <button id="filtro-pendentes"
+                    class="w-full p-3 text-center text-black bg-blue-200 border border-gray-400 rounded-lg hover:bg-blue-600 hover:text-white transition duration-150">
+                    <h3>
+                        Pendentes
+                    </h3>
+                </button>
+            </nav>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <button
+                class="w-full p-3 text-center text-black border border-black rounded-lg hover:bg-blue-200 hover:text-black transition duration-150">
+                Configurações
+            </button>
+
+            <button
+                class="w-full p-3 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-300 hover:text-black focus:ring-green-20 transition duration-150">
+                Perfil
+            </button>
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex flex-col flex-1 p-6 overflow-y-auto bg-gray-100 ">
+        <!-- HEADER ATUALIZADO: Inclui Input de Data -->
+        <header class="mb-8">
+            <div class="flex flex-row items-stretch justify-center w-full">
+                <!-- Campo de Texto -->
+                <input type="text" id="adicionar-tarefa" placeholder="Adicionar tarefa..."
+                    class="flex-1 max-w-xs p-2 border border-gray-400 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- NOVO CAMPO DE DATA -->
+                <input type="date" id="data-entrega"
+                    class="p-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <!-- Botão Adicionar -->
+                <button class="w-12 p-2 text-center text-white bg-green-500 border border-gray-400 rounded-r-lg hover:bg-green-600 transition duration-150">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Lista de Tarefas (Conteúdo gerado via JS) -->
+        <div id="lista-de-tarefas" class="flex flex-col gap-4">
+        </div>
+
+        <!-- Footer -->
+        <footer class="flex flex-col mt-auto pt-4">
+            <div>
+                <hr>
+            </div>
+            <p class="text-center text-gray-500 mt-2">Criado por Lorena</p>
+        </footer>
+    </main>
+
+    <!-- Modal/Message Box Structure para substituir alerts/confirms (Hidden por padrão) -->
+    <div id="custom-message-box" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
+        <div id="message-content" class="p-6 bg-white rounded-lg shadow-xl max-w-sm w-full">
+            <p id="message-text" class="text-lg font-semibold mb-4"></p>
+            <div id="message-buttons" class="flex justify-end gap-3">
+                <!-- Botões serão inseridos aqui pelo JavaScript -->
+            </div>
+        </div>
     </div>
-
-    <div class="flex flex-col gap-2">
-      <button
-        class="w-full p-3 text-center text-black border border-black rounded-lg hover:bg-blue-200 hover:text-black">
-        Configurações
-      </button>
-
-      <button
-        class="w-full p-3 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-300 hover:text-black focus:ring-green-20">
-        Perfil
-      </button>
-    </div>
-  </aside>
-
-  <main class="flex flex-col flex-1 p-6 overflow-y-auto bg-gray-100 dark:bg-black">
-    <header class="mb-8">
-      <div class="flex flex-row items-center justify-center w-full ">
-        <input type="text" id="adicionar-tarefa" placeholder="Adicionar tarefa..."
-          class="w-2/4 p-2 border border-gray-400 rounded-l-lg">
-        <button class="w-12 p-2 text-center text-white bg-green-500 border border-gray-400 rounded-r-lg">
-          <i class="bi bi-plus-lg"></i>
-        </button>
-      </div>
-    </header>
-
-    <div id="lista-de-tarefas" class="flex flex-col gap-4">
-    </div>
-
-    <footer class="flex flex-col mt-auto pt-4">
-      <div>
-        <hr>
-      </div>
-      <p class="text-center text-gray-500 mt-2">Criado por Lorena</p>
-    </footer>
-  </main>
 </body>
 
 </html>

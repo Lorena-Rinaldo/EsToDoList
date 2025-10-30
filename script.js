@@ -3,22 +3,37 @@
 // =============================================================
 
 // -------------------------------
-// 1. Selecionar os elementos da página (ATUALIZADO)
+// 1. Selecionar os elementos da página (NOVO ID ADICIONADO)
 // -------------------------------
 const campoNovaTarefa = document.getElementById('adicionar-tarefa');
+// NOVO: Selecionar o campo de data
+const campoDataEntrega = document.getElementById('data-entrega'); 
+
 const botaoAdicionar = document.querySelector('header button');
 const listaTarefas = document.getElementById('lista-de-tarefas');
 const campoPesquisa = document.getElementById('pesquisar-tarefa');
 
-// Seleção dos botões de filtro (ATUALIZADA com novos IDs)
-const botaoFiltroTodas = document.getElementById('filtro-todas'); // NOVO BOTÃO
-const botaoFiltroConcluidas = document.getElementById('filtro-concluidas'); // ID adicionado no HTML
-const botaoFiltroPendentes = document.getElementById('filtro-pendentes');   // ID adicionado no HTML
+// Seleção dos botões de filtro
+const botaoFiltroTodas = document.getElementById('filtro-todas'); 
+const botaoFiltroConcluidas = document.getElementById('filtro-concluidas');  
+const botaoFiltroPendentes = document.getElementById('filtro-pendentes');  
 
 // Array principal que armazenará todas as tarefas
 let tarefas = [];
-// Variável para rastrear o filtro ativo (usaremos 'todos' por padrão)
+// Variável para rastrear o filtro ativo
 let filtroAtual = 'todos';
+
+// Função auxiliar para formatar a data (opcional, mas melhora a visualização)
+function formatarDataParaExibicao(dataString) {
+    if (!dataString) return '';
+    try {
+        // Assume que a dataString é o formato 'yyyy-mm-dd' do input
+        const [ano, mes, dia] = dataString.split('-');
+        return `${dia}/${mes}/${ano}`;
+    } catch (e) {
+        return dataString; // Retorna o original se houver erro
+    }
+}
 
 
 // -------------------------------
@@ -40,10 +55,12 @@ function salvarTarefas() {
 }
 
 // -------------------------------
-// 4. Função para adicionar uma nova tarefa
+// 4. Função para adicionar uma nova tarefa (MODIFICADA)
 // -------------------------------
 function adicionarTarefa() {
     const texto = campoNovaTarefa.value.trim();
+    // Captura o valor do novo campo de data (formato yyyy-mm-dd)
+    const dataEntrega = campoDataEntrega ? campoDataEntrega.value : '';
 
     if (texto === '') {
         alert('Digite uma tarefa antes de adicionar!');
@@ -54,17 +71,21 @@ function adicionarTarefa() {
         id: Date.now(),
         texto: texto,
         concluida: false,
-        dataCriacao: new Date().toLocaleDateString('pt-BR')
+        dataCriacao: new Date().toLocaleDateString('pt-BR'),
+        dataEntrega: dataEntrega // NOVO CAMPO ADICIONADO
     }
 
     tarefas.push(novaTarefa);
     salvarTarefas();
     aplicarFiltro(filtroAtual);
     campoNovaTarefa.value = '';
+    
+    // Limpa o campo de data após adicionar
+    if (campoDataEntrega) campoDataEntrega.value = ''; 
 }
 
 // -------------------------------
-// 5. Função para exibir as tarefas na tela
+// 5. Função para exibir as tarefas na tela (MODIFICADA)
 // -------------------------------
 function exibirTarefas(listaParaMostrar) {
     if (!listaTarefas) return;
@@ -72,10 +93,13 @@ function exibirTarefas(listaParaMostrar) {
     listaTarefas.innerHTML = '';
 
     for (let tarefa of listaParaMostrar) {
+        const dataFormatada = formatarDataParaExibicao(tarefa.dataEntrega);
+        // Exemplo: se a tarefa estiver pendente E tiver uma data de entrega, ela é uma tarefa com prazo
+        const temPrazo = !tarefa.concluida && tarefa.dataEntrega;
+        
         const card = document.createElement('div');
-        // Adicionamos a classe 'tarefa-card' para facilitar a identificação do clique
-        card.className = `tarefa-card p-4 mb-6 bg-white border rounded-lg shadow-md transition-all cursor-pointer ${tarefa.concluida ? 'border-green-400 opacity-75' : 'border-gray-200 hover:shadow-lg'}`;
-        card.setAttribute('data-id', tarefa.id); // Adicionamos o data-id no card principal
+        card.className = `tarefa-card p-4 mb-6 bg-white border rounded-lg shadow-md transition-all cursor-pointer ${tarefa.concluida ? 'border-green-400 opacity-75' : temPrazo ? 'border-red-400 hover:shadow-lg' : 'border-gray-200 hover:shadow-lg'}`;
+        card.setAttribute('data-id', tarefa.id);
 
         card.innerHTML = `
             <div class="relative flex justify-end mb-2">
@@ -103,14 +127,16 @@ function exibirTarefas(listaParaMostrar) {
             </div>
 
             <div class="mb-4 post-content pointer-events-none">
-                <div class="flex flex-row w-full items-center">
+                <div class="flex flex-row w-full items-center justify-between">
                     <h2 class="w-full text-xl font-bold ${tarefa.concluida ? 'line-through text-gray-500' : 'text-gray-900'}">
                         ${tarefa.texto}
                     </h2>
-                    <p class="text-sm text-gray-500 whitespace-nowrap">
-                        Data: ${tarefa.dataCriacao}
-                    </p>
-                </div>
+                    
+                    <div class="flex flex-col text-right ml-4">
+                        ${dataFormatada ? `<p class="text-xs font-bold ${tarefa.concluida ? 'text-gray-400' : 'text-red-500'} whitespace-nowrap">Prazo: ${dataFormatada}</p>` : ''}
+                        <p class="text-xs text-gray-500 whitespace-nowrap">Criação: ${tarefa.dataCriacao}</p>
+                    </div>
+                    </div>
             </div>
         `;
 
@@ -122,7 +148,7 @@ function exibirTarefas(listaParaMostrar) {
 }
 
 // -------------------------------
-// 5.1. Adicionar Listeners aos Cards (ATUALIZADO com clique no card)
+// 5.1. Adicionar Listeners aos Cards (Inalterado)
 // -------------------------------
 function adicionarListenersAosCards() {
     // 0. Clique no Card para alternar conclusão (NOVO)
@@ -195,9 +221,8 @@ function adicionarListenersAosCards() {
     });
 }
 
-
 // -------------------------------
-// 6. Função para alternar entre concluída e ativa
+// 6. Função para alternar entre concluída e ativa (Inalterado)
 // -------------------------------
 function alternarConclusao(id) {
     const tarefa = tarefas.find(t => t.id === id);
@@ -209,7 +234,7 @@ function alternarConclusao(id) {
 }
 
 // -------------------------------
-// 7. Função para editar o texto de uma tarefa
+// 7. Função para editar o texto de uma tarefa (MODIFICADA - Agora permite editar o texto E a data)
 // -------------------------------
 function editarTarefa(id) {
     const tarefa = tarefas.find(t => t.id === id);
@@ -217,17 +242,22 @@ function editarTarefa(id) {
         const novaDescricao = prompt('Edite a tarefa:', tarefa.texto);
 
         if (novaDescricao === null || novaDescricao.trim() === '') {
-            return;
+            return; // se cancelar ou deixar em branco, não faz nada
         }
 
+        const novaDataEntrega = prompt('Edite a data de entrega (AAAA-MM-DD ou deixe em branco):', tarefa.dataEntrega || '');
+        
         tarefa.texto = novaDescricao.trim();
+        // Permite definir ou limpar a data
+        tarefa.dataEntrega = novaDataEntrega ? novaDataEntrega.trim() : ''; 
+        
         salvarTarefas();
         aplicarFiltro(filtroAtual);
     }
 }
 
 // -------------------------------
-// 8. Função para excluir uma tarefa
+// 8. Função para excluir uma tarefa (Inalterado)
 // -------------------------------
 function excluirTarefa(id) {
     const confirmar = window.confirm('Tem certeza que deseja excluir esta tarefa?');
@@ -242,7 +272,7 @@ function excluirTarefa(id) {
 }
 
 // -------------------------------
-// 9. Função de pesquisa
+// 9. Função de pesquisa (Inalterado)
 // -------------------------------
 function pesquisarTarefas() {
     const termo = campoPesquisa.value.toLowerCase();
@@ -257,14 +287,16 @@ function pesquisarTarefas() {
     }
 
     const resultadosPesquisa = listaFiltrada.filter(function (tarefa) {
-        return tarefa.texto.toLowerCase().includes(termo);
+        // Inclui a pesquisa na data de entrega, se existir
+        const dataMatch = tarefa.dataEntrega ? formatarDataParaExibicao(tarefa.dataEntrega).toLowerCase().includes(termo) : false;
+        return tarefa.texto.toLowerCase().includes(termo) || dataMatch;
     });
 
     exibirTarefas(resultadosPesquisa);
 }
 
 // -------------------------------
-// 10. Função para aplicar o filtro e atualizar a UI (ATUALIZADO para 'todas')
+// 10. Função para aplicar o filtro e atualizar a UI (Inalterado)
 // -------------------------------
 function aplicarFiltro(tipo) {
     filtroAtual = tipo;
@@ -279,48 +311,53 @@ function aplicarFiltro(tipo) {
         listaFiltrada = tarefas;
     }
 
-    // Atualiza a aparência dos botões de filtro (ATUALIZADO)
+    // Atualiza a aparência dos botões de filtro
     const botoes = [botaoFiltroTodas, botaoFiltroConcluidas, botaoFiltroPendentes];
 
     botoes.forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white');
-        btn.classList.add('bg-blue-200', 'text-black');
+        if(btn) { 
+            btn.classList.remove('bg-blue-600', 'text-white');
+            btn.classList.add('bg-blue-200', 'text-black');
+        }
     });
 
-    if (tipo === 'concluidas') {
+    if (tipo === 'concluidas' && botaoFiltroConcluidas) {
         botaoFiltroConcluidas.classList.add('bg-blue-600', 'text-white');
         botaoFiltroConcluidas.classList.remove('bg-blue-200', 'text-black');
-    } else if (tipo === 'pendentes') {
+    } else if (tipo === 'pendentes' && botaoFiltroPendentes) {
         botaoFiltroPendentes.classList.add('bg-blue-600', 'text-white');
         botaoFiltroPendentes.classList.remove('bg-blue-200', 'text-black');
-    } else if (tipo === 'todos') { // NOVO ESTILO
+    } else if (tipo === 'todos' && botaoFiltroTodas) {
         botaoFiltroTodas.classList.add('bg-blue-600', 'text-white');
         botaoFiltroTodas.classList.remove('bg-blue-200', 'text-black');
     }
 
     // Aplica a pesquisa sobre a lista já filtrada
     const termo = campoPesquisa.value.toLowerCase();
-    const resultadosFinais = listaFiltrada.filter(tarefa => tarefa.texto.toLowerCase().includes(termo));
-
+    const resultadosFinais = listaFiltrada.filter(function (tarefa) {
+        // Inclui a pesquisa na data de entrega, se existir
+        const dataMatch = tarefa.dataEntrega ? formatarDataParaExibicao(tarefa.dataEntrega).toLowerCase().includes(termo) : false;
+        return tarefa.texto.toLowerCase().includes(termo) || dataMatch;
+    });
 
     exibirTarefas(resultadosFinais);
 }
 
 
 // -------------------------------
-// 11. Eventos (interações do usuário) (ATUALIZADO)
+// 11. Eventos (interações do usuário) (Inalterado)
 // -------------------------------
 botaoAdicionar.addEventListener('click', adicionarTarefa);
 campoPesquisa.addEventListener('input', pesquisarTarefas);
 
-// Eventos para os botões de filtro da sidebar (ATUALIZADO)
-botaoFiltroTodas.addEventListener('click', () => aplicarFiltro('todos')); // NOVO EVENTO
-botaoFiltroConcluidas.addEventListener('click', () => aplicarFiltro('concluidas'));
-botaoFiltroPendentes.addEventListener('click', () => aplicarFiltro('pendentes'));
+// Eventos para os botões de filtro da sidebar 
+if(botaoFiltroTodas) botaoFiltroTodas.addEventListener('click', () => aplicarFiltro('todos'));
+if(botaoFiltroConcluidas) botaoFiltroConcluidas.addEventListener('click', () => aplicarFiltro('concluidas'));
+if(botaoFiltroPendentes) botaoFiltroPendentes.addEventListener('click', () => aplicarFiltro('pendentes'));
 
 
 // -------------------------------
-// 12. Permitir adicionar tarefa ao pressionar Enter
+// 12. Permitir adicionar tarefa ao pressionar Enter (Inalterado)
 // -------------------------------
 campoNovaTarefa.addEventListener('keydown', function (evento) {
     if (evento.key === 'Enter') {
@@ -330,6 +367,6 @@ campoNovaTarefa.addEventListener('keydown', function (evento) {
 });
 
 // -------------------------------
-// 13. Quando a página carregar, buscamos as tarefas salvas
+// 13. Quando a página carregar, buscamos as tarefas salvas (Inalterado)
 // -------------------------------
 window.onload = carregarTarefasSalvas;
