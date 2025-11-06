@@ -85,14 +85,14 @@ A estrutura de arquivos e pastas do projeto está organizada da seguinte forma:
 ├── docs/
 │ ├── requisitos-funcionais.md
 │ └── wireframe.excalidraw
-├── node_modules/ (gerado pelo npm, se usado para dependências ou Tailwind CLI)
-├── .package-lock.json (se usado npm)
+├── node_modules/
+├── .package-lock.json 
 ├── index.html
-├── package-lock.json (se usado npm)
-├── package.json (se usado npm)
+├── package-lock.json 
+├── package.json 
 ├── script.js
 ├── styles.css
-└── tailwind.config.js (se Tailwind for customizado localmente)
+└── tailwind.config.js 
 ```
 **Observações:**
 *   As pastas e arquivos relacionados ao `npm` (`node_modules`, `package.json`, `package-lock.json`, `tailwind.config.js`) são importantes para o desenvolvimento e, se você estiver usando o Tailwind CSS de forma local (não apenas via CDN), eles serão essenciais para compilar seus estilos. Se você usa apenas o CDN, eles podem ser removidos (mas geralmente é melhor mantê-los se houver histórico de instalação de dependências).
