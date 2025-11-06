@@ -102,6 +102,7 @@ A estrutura de arquivos e pastas do projeto está organizada da seguinte forma:
 ## Contato
 Desenvolvido por: **Lorena Rinaldo**
 
+*   **Vercel**: [Meu Projeto](https://es-to-do-list-eight.vercel.app/)
 *   **GitHub**: [Lorena-Rinaldo](https://github.com/Lorena-Rinaldo)
 *   **LinkedIn**: [www.linkedin.com/in/lorena-rinaldo01](https://www.linkedin.com/in/lorena-rinaldo01)
 *   **Email**: [lorena.rinaldodev@gmail.com](lorena.rinaldodev@gmail.com)
